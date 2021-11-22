@@ -1,0 +1,21 @@
+name: model-wine-quality
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: cml_run
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          #the ML workflows goes here
+          pip install -r requirements.txt
+          python train.py
+          
+          
+          echo " MODELS METRICS"
+          cat metrics.txt 
+          
