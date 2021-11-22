@@ -15,7 +15,12 @@ jobs:
           pip install -r requirements.txt
           python train.py
           
+          #create a markdown document ( report .md)
+          echo "## MODELS METRICS" >> report.md
+          cat metrics.txt >> report.md
           
-          echo " MODELS METRICS"
-          cat metrics.txt 
+          echo "## DATA VIZ" >> report.md
+          cml-publish feature_importance.png --md >> report.md
+          cml-publish residuals.png --md >> report.md 
           
+          cml-send-comment report.md
